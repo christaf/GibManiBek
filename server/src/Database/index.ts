@@ -1,6 +1,6 @@
 import config from 'config';
 import mysql2 from 'mysql2';
-import insertionHandler from "./insertionHandler";
+import insertionHandler from "./insert/insertionHandler";
 
 interface insertData {
     "table": string
