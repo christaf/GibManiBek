@@ -1,0 +1,11 @@
+{
+  "APP": {
+    "PORT": "8800"
+  },
+  "DATABASE": {
+    "HOST": "localhost",
+    "DATABASE": "money",
+    "USER": "root",
+    "PASS": "password"
+  }
+}
