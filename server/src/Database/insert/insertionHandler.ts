@@ -22,8 +22,7 @@ export default async function (database, query) {
         const columns = data.map(tuple => tuple[0]);
         const values = data.map(tuple => tuple[1]);
 
-        const query = `INSERT INTO ${table} (${columns.join(', ')}) 
-                                            VALUES ("${values.join('", "')}")`
+        const query = `INSERT INTO ${table} (${columns.join(', ')}) VALUES ("${values.join('", "')}")`
 
         const result = await database.execute(query)
         const resultHeader = result[0]
