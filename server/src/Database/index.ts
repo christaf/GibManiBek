@@ -4,7 +4,7 @@ import insertionHandler from "./insert/insertionHandler";
 
 interface insertData {
     "table": string
-    "data": Array<[string, string]>
+    "data": Array<Array<[string, string]>>
 }
 
 interface selectData {
@@ -27,7 +27,7 @@ interface deleteData {
 }
 
 export default class Connection {
-    public promisePool
+    public promisePool: mysql2.Pool
 
     constructor() {
         const host: string = config.get("DATABASE.HOST");
@@ -45,21 +45,12 @@ export default class Connection {
             queueLimit: 0 // No limit on the queue size
         })
         console.log("Connected")
+        // @ts-ignore
         this.promisePool = pool.promise();
     }
 
     insertDataIntoDB(data: insertData) {
         return insertionHandler(this.promisePool, data)
-    }
-
-    async selectData() {
-        try {
-            const query = 'SELECT * FROM users';
-            const [rows] = await this.promisePool.query(query);
-            console.log('Selected data:', rows);
-        } catch (error) {
-            console.error('Select error:', error);
-        }
     }
 
 };
