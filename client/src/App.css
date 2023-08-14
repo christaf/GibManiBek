@@ -7,20 +7,9 @@
   pointer-events: none;
 }
 
-.Matt {
-  height: 40vmin;
-  pointer-events: none;
-}
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .Matt {
-    animation: Matt-spin infinite 1s linear;
   }
 }
 
@@ -45,14 +34,5 @@
   }
   to {
     transform: rotate(360deg);
-  }
-}
-
-@keyframes Matt-spin {
-  from {
-    transform: rotate(360deg);
-  }
-  to {
-    transform: rotate(0deg);
   }
 }
