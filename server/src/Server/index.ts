@@ -20,6 +20,7 @@ async function ServerStart(Connection: Connection) {
             ["lastname", "Boss"],
             ["password", "ugabuga"],
             ["salt", "slonejezioro"]],
+            [["name", "mateusz"]]
         ]
     })
 

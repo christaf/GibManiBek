@@ -45,7 +45,6 @@ export default class Connection {
             queueLimit: 0 // No limit on the queue size
         })
         console.log("Connected")
-        // @ts-ignore
         this.promisePool = pool.promise();
     }
 
