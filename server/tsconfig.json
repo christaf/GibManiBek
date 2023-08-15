@@ -15,6 +15,7 @@
     "noEmit": true,
     "sourceMap": true, // Generate sourcemaps
     "outDir": "dist", // Location of compiled JavaScript files
+    "types": ["node", "mysql2", "jest"]
   },
   "ts-node": {
     "esm": true,

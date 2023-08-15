@@ -12,10 +12,17 @@ async function ServerStart(Connection: Connection) {
     // app.listen(port, () => {
     //     return console.log(`Serwer uruchomiony na porcie ${port}`);
     // });
+    const query = {
+        table: 'testTable',
+        data: [
+            [['column1', 'value1'], ['column2', 'value2']],
+            [['column1', 'value11']]
+        ]
+    };
 
     const insertion = await Connection.insertDataIntoDB({
-        "table": "users",
-        "data": [[
+        table: "users",
+        data: [[
             ["name", "Sandra"],
             ["lastname", "Boss"],
             ["password", "ugabuga"],

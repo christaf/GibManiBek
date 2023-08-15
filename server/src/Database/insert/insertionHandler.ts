@@ -1,18 +1,20 @@
 export default async function (database: any, query: any) {
 
     const {table, data} = query
+    const idsInserted: Array<number> | null = []
     try {
-        let idsInserted = []
         let rowsInserted = 0
         if (data.length === 0)
             return {
                 status: false,
+                ids: idsInserted,
                 message: 'There is no data to insert'
             }
         for (const dataArray of data) {
             if (dataArray.length === 0) {
                 return {
                     status: false,
+                    ids: idsInserted,
                     message: 'There is no data to insert',
                 };
             }
@@ -21,7 +23,7 @@ export default async function (database: any, query: any) {
             const values = dataArray.map((tuple: any) => tuple[1]);
 
             const query = `INSERT INTO ${table} (${columns.join(', ')}) VALUES ("${values.join('", "')}")`
-            const result: any = await database.query(query)
+            const result = await database.execute(query)
 
             const resultHeader: any = result[0]
             const affectedRows: number = resultHeader.affectedRows
@@ -41,6 +43,7 @@ export default async function (database: any, query: any) {
     } catch (error) {
         return {
             status: false,
+            ids: idsInserted,
             message: 'Error executing query: ' + error,
         };
     }

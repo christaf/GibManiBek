@@ -1,22 +1,23 @@
-import insertionHandler from './insertionHandler';
+import insertionHandler from "./insertionHandler"
+describe('InsertionHandler', () => {
+    it('correct values inserted', async () => {
 
-describe('insertionHandler', () => {
-    it('correct value test', async () => {
-        const executeMock = jest.fn();
-        const databaseMock = {
-            execute: executeMock
+        const dbMock = {
+            execute: jest.fn().mockReturnValueOnce([{affectedRows: 1, insertId: 1}])
+                .mockReturnValueOnce([{affectedRows: 1, insertId: 2}])
         };
 
         const query = {
             table: 'testTable',
-            data: [[['column1', 'value1'], ['column2', 'value2']], [['column1', 'value11']]]
+            data: [
+                [['column1', 'value1'], ['column2', 'value2']],
+                [['column1', 'value11']]
+            ]
         };
-
-        await insertionHandler(databaseMock, query);
-
-        expect(executeMock).toHaveBeenCalledWith(
-            'INSERT INTO testTable (column1, column2) VALUES ("value1", "value2")'
-        );
+        const result = await insertionHandler(dbMock, query);
+        expect(result.status).toBe(true);
+        expect(result.ids).toEqual([1, 2]);
+        expect(result.message).toBe('Rows inserted: 2');
+        expect(dbMock.execute.mock.calls[0][0]).toBe('INSERT INTO testTable (column1, column2) VALUES ("value1", "value2")');
     });
-
 });

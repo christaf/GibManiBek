@@ -1,6 +1,7 @@
 import config from 'config';
 import mysql2 from 'mysql2';
 import insertionHandler from "./insert/insertionHandler";
+import {Pool} from "mysql2/promise";
 
 interface insertData {
     "table": string
@@ -27,7 +28,8 @@ interface deleteData {
 }
 
 export default class Connection {
-    public promisePool: mysql2.Pool
+    public pool: mysql2.Pool
+    public promisePool: Pool
 
     constructor() {
         const host: string = config.get("DATABASE.HOST");
@@ -35,7 +37,7 @@ export default class Connection {
         const user: string = config.get("DATABASE.USER");
         const pass: string = config.get("DATABASE.PASS");
 
-        const pool = mysql2.createPool({
+        const pool: mysql2.Pool = mysql2.createPool({
             host: host,
             user: user,
             password: pass,
@@ -45,11 +47,11 @@ export default class Connection {
             queueLimit: 0 // No limit on the queue size
         })
         console.log("Connected")
-        this.promisePool = pool.promise();
+        this.pool = pool;
+        this.promisePool = pool.promise()
     }
 
-    insertDataIntoDB(data: insertData) {
+    insertDataIntoDB(data: any): Promise<any> {
         return insertionHandler(this.promisePool, data)
     }
-
 };
