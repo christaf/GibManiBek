@@ -2,6 +2,7 @@ import config from 'config';
 import mysql2 from 'mysql2';
 import insertionHandler from "./insert/insertionHandler";
 import {Pool} from "mysql2/promise";
+import selectionHandler from "./select/selectionHandler";
 
 interface insertData {
     "table": string
@@ -11,9 +12,9 @@ interface insertData {
 interface selectData {
     "table": string
     "columns": Array<string>
+    "conditions": Array<string>
     "all": boolean
-    "data": Array<string>
-    "where": Array<Array<[string, string]>>
+    "like": boolean
 }
 
 interface updateData {
@@ -51,7 +52,19 @@ export default class Connection {
         this.promisePool = pool.promise()
     }
 
-    insertDataIntoDB(data: any): Promise<any> {
+    insertDataIntoDB(data: insertData): Promise<any> {
         return insertionHandler(this.promisePool, data)
+    }
+
+    selectDataFromDB(data: selectData): Promise<any> {
+        return selectionHandler(this.promisePool, data)
+    }
+
+    deleteDataFromDB(data: deleteData): Promise<any> {
+        return
+    }
+
+    updateDataFromDB(data: updateData): Promise<any> {
+        return
     }
 };
