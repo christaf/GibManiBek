@@ -34,7 +34,7 @@ async function ServerStart(Connection: Connection) {
 
     const res2 = await Connection.deleteDataFromDB({
         table: "users",
-        conditions: [["id", "24"], ["password", "ugabuga"]]
+        conditions: [["password", "ugabuga"]]
     })
 
     const res3 = await Connection.selectDataFromDB({
@@ -44,7 +44,7 @@ async function ServerStart(Connection: Connection) {
         all: true,
         like: true
     })
-    console.log(res3)
+    console.log(res2)
 
 }
 

@@ -4,6 +4,7 @@ import insertionHandler from "./insert/insertionHandler";
 import {Pool} from "mysql2/promise";
 import selectionHandler from "./select/selectionHandler";
 import deleteHandler from "./delete/deleteHandler";
+import updateHandler from "./update/updateHandler";
 
 interface insertData {
     "table": string
@@ -19,9 +20,9 @@ interface selectData {
 }
 
 interface updateData {
-    "table": string
-    "data": Array<string>
-    "where": Array<Array<[string, string]>>
+    table: string;
+    data: Array<Array<[string, string]>>;
+    conditions: Array<Array<[string, string]>>;
 }
 
 interface deleteData {
@@ -66,6 +67,6 @@ export default class Connection {
     }
 
     updateDataFromDB(data: updateData): Promise<any> {
-        return
+        return updateHandler(this.promisePool, data)
     }
 };
