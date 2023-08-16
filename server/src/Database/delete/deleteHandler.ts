@@ -13,10 +13,10 @@ export default async function (database: any, query: any) {
         }
 
         const query = `DELETE FROM ${table} ${conditionSentence}`;
-        console.log(query)
         const result = await database.execute(query);
-        const resultHeader: any[] = result[0];
-        const affectedRows: number | null = resultHeader.affectedRows
+
+        const resultHeader: { affectedRows: number }[] = result[0];
+        const affectedRows: number = resultHeader[0]?.affectedRows ?? 0;
 
         return {
             status: true,
