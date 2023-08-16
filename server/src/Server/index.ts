@@ -19,28 +19,32 @@ async function ServerStart(Connection: Connection) {
             [['column1', 'value11']]
         ]
     };
-    //
-    // const res = await Connection.insertDataIntoDB({
-    //     table: "users",
-    //     data: [[
-    //         ["name", "Sandra"],
-    //         ["lastname", "Boss"],
-    //         ["password", "ugabuga"],
-    //         ["salt", "slonejezioro"]],
-    //         [["name", "mateusz"]]
-    //     ]
-    // })
 
-    const res = await Connection.selectDataFromDB({
+    const res = await Connection.insertDataIntoDB({
+        table: "users",
+        data: [[
+            ["name", "Sandra"],
+            ["lastname", "Boss"],
+            ["password", "ugabuga"],
+            ["salt", "slonejezioro"]],
+            [["name", "mateusz"]]
+        ]
+    })
+
+
+    const res2 = await Connection.deleteDataFromDB({
+        table: "users",
+        conditions: [["id", "24"], ["password", "ugabuga"]]
+    })
+
+    const res3 = await Connection.selectDataFromDB({
         table: "users",
         conditions: [],
         columns: [],
         all: true,
         like: true
     })
-
-    // console.log(res)
-
+    console.log(res3)
 
 }
 
