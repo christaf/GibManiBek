@@ -44,7 +44,7 @@ export default async function (database: any, query: any) {
         return {
             status: false,
             ids: idsInserted,
-            message: 'Error executing query: ' + error,
+            message: '' + error,
         };
     }
 

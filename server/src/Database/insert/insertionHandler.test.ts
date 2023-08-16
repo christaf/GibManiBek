@@ -65,7 +65,7 @@ describe('InsertionHandler', () => {
         const result = await insertionHandler(dbMock, query);
         expect(result.status).toBe(false);
         expect(result.ids).toEqual([]);
-        expect(result.message).toBe('Error executing query: Error: Query execution error');
+        expect(result.message).toBe('Error: Query execution error');
         expect(dbMock.execute).toHaveBeenCalled();
     });
 });
