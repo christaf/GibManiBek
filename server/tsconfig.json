@@ -1,12 +1,25 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "target": "es2022",
+    "allowJs": true,
+    "skipLibCheck": true,
     "esModuleInterop": true,
-    "target": "es5",
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "ES2022",
     "moduleResolution": "node",
-    "sourceMap": true,
-    "outDir": "dist",
-    "jsx": "react",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "sourceMap": true, // Generate sourcemaps
+    "outDir": "dist", // Location of compiled JavaScript files
+    "types": ["node", "mysql2", "jest"]
   },
-  "lib": ["es2015"]
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  },
+  "lib": ["es2022"]
 }
