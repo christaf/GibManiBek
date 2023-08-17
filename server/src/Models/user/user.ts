@@ -14,9 +14,9 @@ export default class User implements UserProps {
     name: string | null;
     lastname: string | null;
     email: string;
-    salt: string;
+    salt!: string;
     isAdministrator: boolean;
-    hashedPassword: string | null;
+    hashedPassword!: string | null;
 
     constructor(props: UserProps, password?: string) {
         this.id = props.id;
@@ -26,7 +26,7 @@ export default class User implements UserProps {
 
         this.isAdministrator = props.isAdministrator || false;
 
-        const saltPromise = props.salt ? Promise.resolve(props.salt) : bcrypt.salt(10);
+        const saltPromise = props.salt ? Promise.resolve(props.salt) : bcrypt.genSalt(10);
 
         if (password) {
             saltPromise.then(salt => {
@@ -47,7 +47,7 @@ export default class User implements UserProps {
     }
 
     private hashPassword(password: string, salt: string): string {
-        return bcrypt.hash(password, salt);
+        return bcrypt.hashSync(password, salt);
     }
 
 }

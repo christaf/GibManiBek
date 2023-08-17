@@ -1,4 +1,4 @@
-import insertionHandler from "./insertionHandler"
+import insertionHandler from "../insert/insertionHandler"
 describe('InsertionHandler', () => {
     it('correct values inserted', async () => {
         const dbMock = {

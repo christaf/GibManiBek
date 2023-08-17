@@ -1,4 +1,4 @@
-import selectHandler from "./selectionHandler";
+import selectHandler from "../select/selectionHandler";
 
 describe('selectHandler', () => {
     const dbMock: any = {

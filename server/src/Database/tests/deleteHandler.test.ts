@@ -1,4 +1,4 @@
-import deleteHandler from "./deleteHandler";
+import deleteHandler from "../delete/deleteHandler";
 
 describe('deleteHandler', () => {
     const dbMock: any = {

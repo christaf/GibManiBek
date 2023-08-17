@@ -1,4 +1,4 @@
-import updateHandler from "./updateHandler";
+import updateHandler from "../update/updateHandler";
 
 describe('updateHandler', () => {
     const dbMock: any = {
