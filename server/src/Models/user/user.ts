@@ -14,7 +14,7 @@ export default class User implements UserProps {
     name: string | null;
     lastname: string | null;
     email: string;
-    salt: string | null;
+    salt: string;
     isAdministrator: boolean;
     hashedPassword: string | null;
 
@@ -23,12 +23,18 @@ export default class User implements UserProps {
         this.name = props.name;
         this.lastname = props.lastname;
         this.email = props.email;
-        this.salt = props.salt;
+
         this.isAdministrator = props.isAdministrator || false;
 
+        const saltPromise = props.salt ? Promise.resolve(props.salt) : bcrypt.salt(10);
+
         if (password) {
-            this.hashedPassword = this.hashPasswordSync(password, props.salt);
+            saltPromise.then(salt => {
+                this.salt = salt;
+                this.hashedPassword = this.hashPassword(password, salt);
+            });
         } else {
+            this.salt = ""; // Set a default value or handle null case
             this.hashedPassword = null;
         }
     }
@@ -40,8 +46,8 @@ export default class User implements UserProps {
         return bcrypt.compare(password, this.hashedPassword);
     }
 
-    private hashPasswordSync(password: string, salt: string | null): string {
-        return bcrypt.hash(password, salt || bcrypt.salt(10));
+    private hashPassword(password: string, salt: string): string {
+        return bcrypt.hash(password, salt);
     }
 
 }
