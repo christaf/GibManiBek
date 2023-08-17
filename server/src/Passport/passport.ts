@@ -3,15 +3,17 @@ import passport from "passport";
 import {Strategy as LocalStrategy} from "passport-local";
 import Connection from "../Database";
 
+const Connect = Connection.getInstance()
+
 passport.use(new LocalStrategy(
     {usernameField: 'email'},
     async function (email: string, password, done) {
         try {
-            const user = await Connection.findUserByEmail(email);
+            const user: User = await Connect.findUserByEmail(email);
             if (!user) {
                 return done(null, false, {message: 'Incorrect email.'});
             }
-            if (!user.isValidPassword(password)) {
+            if (!await user.isValidPassword(password)) {
                 return done(null, false, {message: 'Incorrect password.'});
             }
             return done(null, user);

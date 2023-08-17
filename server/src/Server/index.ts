@@ -7,7 +7,8 @@ import passport from "passport";
 const app = express();
 const port = config.get("APP.PORT");
 
-async function ServerStart(Connection: Connection) {
+async function ServerStart() {
+    const Connect = Connection.getInstance()
     app.use(express.json());
     app.use(express.urlencoded({extended: true}));
 
@@ -20,7 +21,7 @@ async function ServerStart(Connection: Connection) {
         return console.log(`Serwer uruchomiony na porcie ${port}`);
     });
 
-    Connection.findUserByEmail("mateusz")
+    await Connect.findUserByEmail("mateusz")
     // const query = {
     //     table: 'testTable',
     //     data: [

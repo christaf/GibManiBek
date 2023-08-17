@@ -1,7 +1,5 @@
 import {app, ServerStart} from './src/Server';
-import Connection from './src/Database/index';
 
-const Connect = new Connection()
-ServerStart(Connect).then(
+ServerStart().then(
     () => console.log("Server started")
 );
