@@ -5,6 +5,7 @@ import {Pool} from "mysql2/promise";
 import selectionHandler from "./select/selectionHandler";
 import deleteHandler from "./delete/deleteHandler";
 import updateHandler from "./update/updateHandler";
+import User from "../Models/user/user";
 
 interface insertData {
     "table": string
@@ -54,19 +55,31 @@ export default class Connection {
         this.promisePool = pool.promise()
     }
 
-    insertDataIntoDB(data: insertData): Promise<any> {
+    async insertDataIntoDB(data: insertData): Promise<any> {
         return insertionHandler(this.promisePool, data)
     }
 
-    selectDataFromDB(data: selectData): Promise<any> {
+    async selectDataFromDB(data: { all: boolean; like: boolean; columns: any[]; conditions: string[][]; table: string }): Promise<any> {
         return selectionHandler(this.promisePool, data)
     }
 
-    deleteDataFromDB(data: deleteData): Promise<any> {
+    async deleteDataFromDB(data: deleteData): Promise<any> {
         return deleteHandler(this.promisePool, data)
     }
 
-    updateDataFromDB(data: updateData): Promise<any> {
+    async updateDataFromDB(data: updateData): Promise<any> {
         return updateHandler(this.promisePool, data)
+    }
+
+    async findUserByEmail(email: string) {
+        const userData = await this.selectDataFromDB({
+            table: "users",
+            columns: [],
+            conditions: [["name", email]], //TODO change to email
+            all: true,
+            like: false
+        })
+        const user = new User(userData.result[0])
+        console.log(user)
     }
 };
