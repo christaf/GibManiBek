@@ -77,3 +77,6 @@ button:focus-visible {
   align-items: center;
   border-bottom: 1px solid #0077ff;
 }
+.googlebutton{
+  align-items: center;
+}

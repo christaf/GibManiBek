@@ -4,7 +4,8 @@ import {createBrowserRouter, RouterProvider,} from "react-router-dom";
 import './index.css'
 import Root from "./routes/root.tsx";
 import ErrorPage from "./routes/error-page.tsx";
-import SignInSide from "./routes/login.tsx";
+import SignIn from "./routes/signin.tsx";
+import SignUp from "./routes/signup.tsx";
 
 const router = createBrowserRouter([
     {
@@ -14,8 +15,12 @@ const router = createBrowserRouter([
     },
     {
         path: "/login",
-        element: <SignInSide/>,
+        element: <SignIn/>,
     },
+    {
+        path: "/register",
+        element: <SignUp/>,
+    }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
