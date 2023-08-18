@@ -1,3 +1,5 @@
+import User from "../../Models/user/user";
+
 interface insertData {
     "table": string
     "data": Array<Array<[string, string]>>
@@ -6,7 +8,7 @@ interface insertData {
 interface selectData {
     "table": string
     "columns": Array<string>
-    "conditions": Array<string>
+    "conditions": Array<[string, string]>
     "all": boolean
     "like": boolean
 }
@@ -24,7 +26,7 @@ interface deleteData {
 export class MockConnection {
 
     async selectDataFromDB(data: selectData): Promise<any> {
-        if (data.conditions[0][0] === "name" && data.conditions[0][1] === "test@example.com") {
+        if (data.conditions[0][0] === "email" && data.conditions[0][1] === "test@example.com") {
             return {
                 result: [
                     {
@@ -41,4 +43,22 @@ export class MockConnection {
             return { result: [] };
         }
     }
+
+    // async findUserByEmail(email: string): Promise<User | null> {
+    //     const data = await this.selectDataFromDB({
+    //         table: "users",
+    //         columns: [],
+    //         conditions: [["email", email]],
+    //         all: true,
+    //         like: false,
+    //     });
+    //
+    //     if (data.result.length > 0) {
+    //         const userData = data.result[0];
+    //         const user = new User(userData);
+    //         return user;
+    //     } else {
+    //         return null;
+    //     }
+    // }
 }

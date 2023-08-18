@@ -10,12 +10,9 @@ describe('Connection', () => {
     describe('findUserByEmail', () => {
         it('should find a user by email', async () => {
             const connection = Connection.getInstance();
-            console.log(connection)
             const email = 'test@example.com';
-            const data = await connection.selectDataFromDB({all: true, like: false, columns: [], conditions: [['name', email]], table: 'users'})
-            console.log(data)
+            const data = await connection.selectDataFromDB({all: true, like: false, columns: [], conditions: [['email', email]], table: 'users'})
             const user = await connection.findUserByEmail(email);
-            console.log(user)
             expect(user).toBeInstanceOf(User);
             expect(user!.email).toBe(email);
         });
@@ -28,28 +25,36 @@ describe('Connection', () => {
 
             expect(user).toBeNull();
         });
-        it('should find a user by email', async () => {
+
+        it('should find123123 a user by email', async () => {
             const connection = Connection.getInstance();
 
             // Mocking selectDataFromDB for the test
-            connection.selectDataFromDB = jest.fn().mockResolvedValue({
+            const mockedUserData = {
                 result: [
                     {
                         id: 1,
                         name: 'Test User',
+                        lastname: 'Lastname',
                         email: 'test@example.com',
-                        // ... other properties
+                        salt: 'somesalt',
+                        isAdministrator: false,
+                        hashedPassword: 'hashed'
                     }
                 ]
-            });
+            };
+            connection.selectDataFromDB = jest.fn().mockResolvedValue(mockedUserData);
 
             const email = 'test@example.com';
             const user = await connection.findUserByEmail(email);
 
             expect(user).toBeInstanceOf(User);
-            expect(user!.email).toBe(email);
+            expect(user.id).toBe(mockedUserData.result[0].id);
+            expect(user.name).toBe(mockedUserData.result[0].name);
+            // ... continue with other properties
         });
+
     });
 
-    // ... Other tests for other methods
+
 });

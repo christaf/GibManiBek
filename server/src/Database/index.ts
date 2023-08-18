@@ -15,7 +15,7 @@ interface insertData {
 interface selectData {
     "table": string
     "columns": Array<string>
-    "conditions": Array<string>
+    "conditions": Array<[string, string]>
     "all": boolean
     "like": boolean
 }
