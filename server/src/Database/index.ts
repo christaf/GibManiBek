@@ -90,4 +90,5 @@ export default class Connection {
         if (userData.result.length === 0) return null;
         return new User(userData.result[0]);
     }
+    //Todo: FINDUSERBY(EMAIL|ID|NAME|LASTNAME)
 };
