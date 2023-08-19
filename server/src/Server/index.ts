@@ -1,8 +1,9 @@
 import express from 'express'
 import Connection from "../Database";
 import config from "config"
-import router from "../Routes/routes";
+import configureRoutes from "../Routes/routes";
 import passport from "passport";
+import {configurePassport} from "../Passport/configurePassport";
 
 const app = express();
 const port = config.get("APP.PORT");
@@ -15,7 +16,8 @@ async function ServerStart() {
     app.use(passport.initialize());
     app.use(passport.session());
 
-    app.use(router)
+    configureRoutes(app);
+    configurePassport();
 
     app.listen(port, () => {
         return console.log(`Serwer uruchomiony na porcie ${port}`);
