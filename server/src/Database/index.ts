@@ -30,15 +30,18 @@ interface deleteData {
     "table": string
     "conditions": Array<[string, string]>
 }
+
 export default class Connection {
 
     private static instance: Connection | null = null;
+
     public static getInstance(): Connection {
         if (!Connection.instance) {
             Connection.instance = new Connection();
         }
         return Connection.instance;
     }
+
     public pool: mysql2.Pool
     public promisePool: Pool
 
@@ -78,16 +81,16 @@ export default class Connection {
         return updateHandler(this.promisePool, data)
     }
 
-    async findUserByEmail(email: string): Promise<User> {
+    async findUserByEmail(email: string): Promise<User | null> {
         const userData = await this.selectDataFromDB({
             table: "users",
             columns: [],
-            conditions: [["name", email]], //TODO change to email
+            conditions: [["email", email]],
             all: true,
             like: false
         })
-        const user = new User(userData.result[0]) //TODO check if there are more than one user
-        console.log(user)
-        return user;
+        //TODO check if there are more than one user
+        if (userData.result.length === 0) return null;
+        return new User(userData.result[0]);
     }
 };
