@@ -87,7 +87,7 @@ export default class Connection {
             like: false
         })
         //TODO check if there are more than one user
-        if (userData.result.length === 0) return null;
+        if (!userData.result || !userData.result[0]) return null;
         return new User(userData.result[0]);
     }
     //Todo: FINDUSERBY(EMAIL|ID|NAME|LASTNAME)

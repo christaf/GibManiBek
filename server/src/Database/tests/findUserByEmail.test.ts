@@ -3,7 +3,7 @@ import User from '../../Models/user/user';
 
 describe('Connection', () => {
     describe('findUserByEmail', () => {
-        const connection = new Connection();
+        const connection = Connection.getInstance();
         it('should find a user by email', async () => {
             connection.selectDataFromDB = jest.fn().mockResolvedValue({
                 result: [
