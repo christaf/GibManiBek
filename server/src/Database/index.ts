@@ -86,8 +86,7 @@ export default class Connection {
             all: true,
             like: false
         })
-        const user = new User(userData.result[0]) //TODO check if there are more than one user
-        console.log(user)
-        return user;
+         //TODO check if there are more than one user
+        return new User(userData.result[0]);
     }
 };
