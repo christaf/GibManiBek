@@ -30,18 +30,15 @@ interface deleteData {
     "table": string
     "conditions": Array<[string, string]>
 }
-
 export default class Connection {
 
     private static instance: Connection | null = null;
-
     public static getInstance(): Connection {
         if (!Connection.instance) {
             Connection.instance = new Connection();
         }
         return Connection.instance;
     }
-
     public pool: mysql2.Pool
     public promisePool: Pool
 
