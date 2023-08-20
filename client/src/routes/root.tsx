@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import {Link} from "@mui/material";
+import {Image, Photo} from "@mui/icons-material";
 
 
 export default function Root(){
@@ -18,13 +19,16 @@ export default function Root(){
                             color="inherit"
                             href="/login"
                             onClick={() => {
-                                console.info("I'm a button.");
+                                console.info("I'm a login button.");
                             }}
                         >
                             Login
                         </Link>
                     </Toolbar>
                 </AppBar>
+            </Box>
+            <Box>
+                <img className={"welcomeImg"} src={"https://images.pexels.com/photos/3564390/pexels-photo-3564390.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"} alt={"welcomeImg"}/>
             </Box>
         </>
     )
