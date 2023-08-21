@@ -10,7 +10,7 @@ const app = express();
 const port = config.get("APP.PORT");
 
 async function ServerStart() {
-    const Connect = Connection.getInstance()
+
     app.use(express.json());
     app.use(express.urlencoded({extended: true}));
 
@@ -30,7 +30,6 @@ async function ServerStart() {
         return console.log(`Serwer uruchomiony na porcie ${port}`);
     });
 
-    await Connect.findUserByEmail("mateusz")
     // const query = {
     //     table: 'testTable',
     //     data: [

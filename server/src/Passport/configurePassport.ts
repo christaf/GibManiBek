@@ -32,8 +32,7 @@ export function configurePassport() {
 
     passport.deserializeUser(async (id, done) => {
         try {
-            const connection = Connection.getInstance();
-            const user = await connection.findUserBy("id", id);
+            const user = await Connect.findUserBy("id", id);
             done(null, user);
         } catch (error) {
             done(error);
