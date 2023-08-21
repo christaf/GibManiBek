@@ -1,3 +1,15 @@
+/**
+ * @description Handles selection of data from database
+ * @example
+ *      const res3 = await Connection.selectDataFromDB({
+ *          table: "users",
+ *          conditions: [],
+ *          columns: [],
+ *          all: true,
+ *          like: true
+ *      })
+ */
+
 export default async function (database: any, query: any) {
     const { table, conditions, columns, like, all } = query;
 

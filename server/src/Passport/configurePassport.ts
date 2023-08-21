@@ -2,9 +2,6 @@ import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import User from "../Models/user/user";
 import Connection from "../Database";
-import {app} from "../Server";
-import session from "express-session";
-import config from "config";
 
 export function configurePassport() {
     const Connect = Connection.getInstance()

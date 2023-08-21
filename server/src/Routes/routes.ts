@@ -1,4 +1,3 @@
-import {app} from "../Server";
 import passport from "passport";
 
 export default function (app: any) {

@@ -1,3 +1,18 @@
+/**
+ * @description Handles insertion of data into database
+ * @example
+ *   const res = await Connection.insertDataIntoDB({
+ *          table: "users",
+ *          data: [[
+ *              ["name", "Sandra"],
+ *              ["lastname", "Boss"],
+ *              ["password", "ugabuga"],
+ *              ["salt", "slonejezioro"]],
+ *              [["name", "mateusz"]]
+ *          ]
+ *      })
+ */
+
 export default async function (database: any, query: any) {
 
     const {table, data} = query

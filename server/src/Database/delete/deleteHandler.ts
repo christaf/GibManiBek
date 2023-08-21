@@ -1,3 +1,11 @@
+/**
+ * @description Deletes rows from a table in the database.
+ * @example
+ *          const res2 = await Connection.deleteDataFromDB({
+ *          table: "users",
+ *          conditions: [["password", "ugabuga"]]
+ *      })
+ */
 export default async function (database: any, query: any) {
     const {table, conditions} = query;
 
