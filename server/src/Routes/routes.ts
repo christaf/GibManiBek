@@ -7,9 +7,12 @@ export default function (app: any) {
         failureRedirect: '/login',
         failureFlash: true,
     }));
-    app.get('/logout', (req, res) => {
-        req.logout();
-        res.redirect('/');
+    app.get('/', (req, res) => {
+        res.send('Hello World!');
     });
+    // app.get('/logout', (req, res) => {
+    //     req.logout();
+    //     res.redirect('/');
+    // });
 }
 

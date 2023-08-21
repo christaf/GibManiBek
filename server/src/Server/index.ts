@@ -3,6 +3,7 @@ import Connection from "../Database";
 import config from "config"
 import configureRoutes from "../Routes/routes";
 import passport from "passport";
+import session from "express-session";
 import {configurePassport} from "../Passport/configurePassport";
 
 const app = express();
@@ -13,6 +14,7 @@ async function ServerStart() {
     app.use(express.json());
     app.use(express.urlencoded({extended: true}));
 
+    app.use(session({ secret: 'your-secret-key' }));
     app.use(passport.initialize());
     app.use(passport.session());
 
