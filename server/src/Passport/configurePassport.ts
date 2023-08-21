@@ -8,11 +8,7 @@ import config from "config";
 
 export function configurePassport() {
     const Connect = Connection.getInstance()
-    app.use(session({
-        secret: config.get("APP.SESSION.SECRET"),
-        resave: false,
-        saveUninitialized: true
-    }));
+
     passport.use(new LocalStrategy.Strategy({ usernameField: 'email', passwordField: 'password' }, async (email, password, done) => {
         try {
             const user = await Connect.findUserByEmail(email);
