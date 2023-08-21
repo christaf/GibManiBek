@@ -4,11 +4,12 @@ import User from "../Models/user/user";
 import Connection from "../Database";
 import {app} from "../Server";
 import session from "express-session";
+import config from "config";
 
 export function configurePassport() {
     const Connect = Connection.getInstance()
     app.use(session({
-        secret: 'your-secret-key', // Replace with a strong secret key
+        secret: config.get("APP.SESSION.SECRET"),
         resave: false,
         saveUninitialized: true
     }));
@@ -19,7 +20,7 @@ export function configurePassport() {
                 return done(null, false);
             }
             const isValid = await user.isValidPassword(password);
-            console.log(isValid)
+
             if (!isValid) {
                 return done(null, false);
             }
@@ -35,8 +36,8 @@ export function configurePassport() {
 
     passport.deserializeUser(async (id, done) => {
         try {
-            const connection = new Connection();
-            const user = await connection.findUserByEmail(id.toString());
+            const connection = Connection.getInstance();
+            const user = await connection.findUserBy("id", id);
             done(null, user);
         } catch (error) {
             done(error);

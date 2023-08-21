@@ -90,5 +90,19 @@ export default class Connection {
         if (!userData.result || !userData.result[0]) return null;
         return new User(userData.result[0]);
     }
+
+    async findUserBy(parameter: string, value: any): Promise<User | null> {
+        const userData = await this.selectDataFromDB({
+            table: "users",
+            columns: [],
+            conditions: [[parameter, value]],
+            all: true,
+            like: false
+        })
+        //TODO check if there are more than one user
+        if (!userData.result || !userData.result[0]) return null;
+        return new User(userData.result[0]);
+    }
+
     //Todo: FINDUSERBY(EMAIL|ID|NAME|LASTNAME)
 };
