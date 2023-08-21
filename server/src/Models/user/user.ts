@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import Connection from "../../Database";
 
 interface UserProps {
     id: number;
@@ -26,24 +27,37 @@ export default class User implements UserProps {
 
         this.isAdministrator = props.isAdministrator || false;
 
-        const saltPromise = props.salt ? Promise.resolve(props.salt) : bcrypt.genSalt(10);
+        if (!props.salt)
+            this.salt = bcrypt.genSaltSync(10);
+        else
+            this.salt = props.salt;
 
         if (password) {
-            saltPromise.then(salt => {
-                this.salt = salt;
-                this.hashedPassword = this.hashPassword(password, salt);
-            });
+            this.hashedPassword = this.hashPassword(password, this.salt);
         } else {
-            this.salt = ""; // Set a default value or handle null case
             this.hashedPassword = null;
         }
     }
 
     public async isValidPassword(password: string): Promise<boolean> {
-        if (!this.hashedPassword) {
-            return false;
+        if (this.hashedPassword === "" || this.hashedPassword === null) {
+            const connection = Connection.getInstance();
+            return connection.selectDataFromDB({
+                table: "users",
+                like: false,
+                all: false,
+                conditions: [["email", this.email]],
+                columns: ["hashed_password"]
+            }).then(async (data: any) => {
+                const hashedPassword: string = data.result[0].hashed_password;
+                return bcrypt.compare(password, hashedPassword);
+            }).catch((error: any) => {
+                console.error("Error retrieving hashed password:", error);
+                return false;
+            });
+        } else {
+            return await bcrypt.compare(password, <string>this.hashedPassword);
         }
-        return bcrypt.compare(password, this.hashedPassword);
     }
 
     private hashPassword(password: string, salt: string): string {
