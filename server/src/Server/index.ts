@@ -4,6 +4,8 @@ import configureRoutes from "../Routes/routes";
 import passport from "passport";
 import session from "express-session";
 import {configurePassport} from "../Passport/configurePassport";
+import cors from "cors";
+import flash from "connect-flash";
 
 const app = express();
 const port = config.get("APP.PORT");
@@ -12,7 +14,8 @@ async function ServerStart() {
 
     app.use(express.json());
     app.use(express.urlencoded({extended: true}));
-
+    app.use(cors());
+    app.use(flash());
     app.use(session({
         secret: config.get("APP.SESSION.SECRET"),
         resave: false,
