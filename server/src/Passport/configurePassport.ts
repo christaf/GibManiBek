@@ -2,9 +2,16 @@ import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import User from "../Models/user/user";
 import Connection from "../Database";
+import {app} from "../Server";
+import session from "express-session";
 
 export function configurePassport() {
     const Connect = Connection.getInstance()
+    app.use(session({
+        secret: 'your-secret-key', // Replace with a strong secret key
+        resave: false,
+        saveUninitialized: true
+    }));
     passport.use(new LocalStrategy.Strategy({ usernameField: 'email' }, async (email, password, done) => {
         try {
             const user = await Connect.findUserByEmail(email);
