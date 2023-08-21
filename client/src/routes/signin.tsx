@@ -13,8 +13,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import GoogleButton from "react-google-button";
-import {LoginSocialGoogle} from "reactjs-social-login";
-import {GoogleLoginButton} from "react-social-login-buttons";
 
 function Copyright(props: any) {
     return (
@@ -35,10 +33,26 @@ export default function SignIn() {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        let jsonData = {
+            "user": [
+                {
+                    "email": data.get("email"),
+                    "password": data.get('password')
+                }
+            ]
+        }
         console.log({
             email: data.get('email'),
             password: data.get('password'),
         });
+        let formData = new FormData();
+        formData.append('json_login', JSON.stringify(jsonData));
+
+        fetch("http://localhost:8800/", {
+            method: 'POST',
+            mode: 'cors',
+            body: formData
+        })
     };
 
     return (
