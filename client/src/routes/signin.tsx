@@ -48,7 +48,7 @@ export default function SignIn() {
         let formData = new FormData();
         formData.append('json_login', JSON.stringify(jsonData));
 
-        fetch("http://localhost:8800/", {
+        fetch("http://localhost:8800/login", {
             method: 'POST',
             mode: 'cors',
             body: formData
