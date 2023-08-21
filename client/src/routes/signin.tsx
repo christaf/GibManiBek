@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 import GoogleButton from "react-google-button";
 
 function Copyright(props: any) {
@@ -30,35 +30,63 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
+
+        const formData = new FormData(event.currentTarget);
         let jsonData = {
             "user": [
                 {
-                    "email": data.get("email"),
-                    "password": data.get('password')
+                    "email": formData.get("email"),
+                    "password": formData.get('password')
                 }
             ]
         }
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
+        console.log(jsonData["user"][0]);
+        const response = await fetch("http://localhost:8800/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json" // Set the content type to JSON
+            },
+            body: JSON.stringify(jsonData) // Convert JSON object to string
         });
-        let formData = new FormData();
-        formData.append('json_login', JSON.stringify(jsonData));
+        if (response.ok) {
+            const responseData = await response.json(); // or response.text()
+            console.log("Response data:", responseData);
+        } else {
+            console.error("Login failed");
+        }
+        // event.preventDefault();
+        // const data = new FormData(event.currentTarget);
+        // let jsonData = {
+        //     "user": [
+        //         {
+        //             "email": data.get("email"),
+        //             "password": data.get('password')
+        //         }
+        //     ]
+        // }
+        // console.log({
+        //     email: data.get('email'),
+        //     password: data.get('password'),
+        // });
+        // let formData = new FormData();
+        // formData.append('json_login', JSON.stringify(jsonData));
+        //
+        // const response = await fetch("http://localhost:8800/login", {
+        //     method: 'POST',
+        //     mode: 'cors',
+        //     body: formData
+        // })
+        // console.log(response);
 
-        fetch("http://localhost:8800/login", {
-            method: 'POST',
-            mode: 'cors',
-            body: formData
-        })
+
     };
 
     return (
         <ThemeProvider theme={defaultTheme}>
             <Container component="main" maxWidth="xs">
-                <CssBaseline />
+                <CssBaseline/>
                 <Box
                     sx={{
                         marginTop: 8,
@@ -67,13 +95,13 @@ export default function SignIn() {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <LockOutlinedIcon />
+                    <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
+                        <LockOutlinedIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
                         <TextField
                             margin="normal"
                             required
@@ -95,21 +123,23 @@ export default function SignIn() {
                             autoComplete="current-password"
                         />
                         <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
+                            control={<Checkbox value="remember" color="primary"/>}
                             label="Remember me"
                         />
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{mt: 3, mb: 2}}
                         >
                             Sign In
                         </Button>
                         <GoogleButton
                             type={'dark'}
-                            label = 'Log In with Google'
-                            onClick={()=>{console.log("Google Btn pressed")}}
+                            label='Log In with Google'
+                            onClick={() => {
+                                console.log("Google Btn pressed")
+                            }}
                         />
                         <Grid container>
                             <Grid item xs>
@@ -125,7 +155,7 @@ export default function SignIn() {
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 8, mb: 4 }} />
+                <Copyright sx={{mt: 8, mb: 4}}/>
             </Container>
         </ThemeProvider>
     );
