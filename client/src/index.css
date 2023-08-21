@@ -80,3 +80,6 @@ button:focus-visible {
 .googlebutton{
   align-items: center;
 }
+.welcomeImg{
+  width: 100%;
+}
