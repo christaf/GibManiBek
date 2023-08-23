@@ -17,10 +17,8 @@ import GoogleButton from "react-google-button";
 function Copyright(props: any) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
+            <div>Mateo&Mateo Kibord Kąąpany</div>
+            <div>Wszystkie Lewa zastrzeżone</div>
             {new Date().getFullYear()}
             {'.'}
         </Typography>
@@ -30,6 +28,40 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        const formData = new FormData(event.currentTarget);
+        const jsonData = {
+            user: [
+                {
+                    email: formData.get("email"),
+                    password: formData.get("password")
+                }
+            ]
+        };
+        //console.error(JSON.stringify(jsonData));
+
+        const response = await fetch("http://localhost:8800/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(jsonData)
+        }).catch(error => {
+            console.error("Error: ", error);
+        });
+
+        if (response.ok) {
+            const responseData = await response.json();
+            console.log("Response data:", responseData);
+        } else {
+            console.error("Login failed");
+        }
+    };
+
+    /*
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -49,13 +81,18 @@ export default function SignIn() {
                 "Content-Type": "application/json" // Set the content type to JSON
             },
             body: JSON.stringify(jsonData) // Convert JSON object to string
-        });
+        })
+            .catch(error => {
+                console.error("Error: ", error);
+            });
         if (response.ok) {
             const responseData = await response.json(); // or response.text()
             console.log("Response data:", responseData);
         } else {
             console.error("Login failed");
         }
+
+     */
         // event.preventDefault();
         // const data = new FormData(event.currentTarget);
         // let jsonData = {
@@ -81,7 +118,7 @@ export default function SignIn() {
         // console.log(response);
 
 
-    };
+    //};
 
     return (
         <ThemeProvider theme={defaultTheme}>
