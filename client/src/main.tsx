@@ -6,6 +6,8 @@ import Root from "./routes/root.tsx";
 import ErrorPage from "./routes/error-page.tsx";
 import SignIn from "./routes/signin.tsx";
 import SignUp from "./routes/signup.tsx";
+import Dashboard from "./routes/dashboard.tsx";
+
 
 const router = createBrowserRouter([
     {
@@ -20,6 +22,10 @@ const router = createBrowserRouter([
     {
         path: "/register",
         element: <SignUp/>,
+    },
+    {
+        path: "/dashboard",
+        element: <Dashboard/>
     }
 ]);
 

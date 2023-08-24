@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import GoogleButton from "react-google-button";
+import {Navigate, useNavigate} from "react-router-dom";
 
 function Copyright(props: any) {
     return (
@@ -28,7 +29,44 @@ function Copyright(props: any) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+    const navigate = useNavigate();
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
 
+        const formData = new FormData(event.currentTarget);
+        const jsonData = {
+            email: formData.get("email"),
+            password: formData.get("password")
+        };
+
+        try {
+            const response = await fetch("http://localhost:8800/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(jsonData)
+            });
+
+            if (response.ok) {
+                const responseData = await response.json();
+                console.error("Response data:", responseData);
+                //TODO: Nawigacja na brudno, trzeba to sensowniej zrobić
+                if(responseData.message == "Login successful"){
+                    navigate("/dashboard");
+                }
+                console.log("Response message: ", responseData.message);
+            } else {
+                console.error("Login failed");
+            }
+        } catch (error) {
+            console.error("Error: ", error);
+        }
+    };
+
+
+    /*
+    //logowanie z formData
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -41,7 +79,6 @@ export default function SignIn() {
                 }
             ]
         };
-        //console.error(JSON.stringify(jsonData));
 
         const response = await fetch("http://localhost:8800/login", {
             method: "POST",
@@ -53,6 +90,8 @@ export default function SignIn() {
             console.error("Error: ", error);
         });
 
+        const data = await response.json();
+
         if (response.ok) {
             const responseData = await response.json();
             console.log("Response data:", responseData);
@@ -60,6 +99,8 @@ export default function SignIn() {
             console.error("Login failed");
         }
     };
+
+     */
 
     /*
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
