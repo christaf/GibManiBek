@@ -7,6 +7,7 @@ import ErrorPage from "./routes/error-page.tsx";
 import SignIn from "./routes/signin.tsx";
 import SignUp from "./routes/signup.tsx";
 import Dashboard from "./routes/dashboard.tsx";
+import Debt from "./routes/debt.tsx";
 
 
 const router = createBrowserRouter([
@@ -25,7 +26,14 @@ const router = createBrowserRouter([
     },
     {
         path: "/dashboard",
-        element: <Dashboard/>
+        element: <Dashboard/>,
+        errorElement: <ErrorPage/>,
+        children: [
+            {
+                path: "debt/:debtId",
+                element: <Debt/>
+            }
+        ]
     }
 ]);
 

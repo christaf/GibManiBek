@@ -1,9 +1,10 @@
+import {Outlet, Link} from "react-router-dom";
 export default function Dashboard(){
 
     return (
         <>
             <div id="sidebar">
-                <h1>React Router Contacts</h1>
+                <h1>Find Your Debts:</h1>
                 <div>
                     <form id="search-form" role="search">
                         <input
@@ -30,15 +31,17 @@ export default function Dashboard(){
                 <nav>
                     <ul>
                         <li>
-                            <a href={`/contacts/1`}>Your Name</a>
+                            <Link to={`/contacts/1`}>Your Name</Link>
                         </li>
                         <li>
-                            <a href={`/contacts/2`}>Your Friend</a>
+                            <Link to={`/contacts/2`}>Your Friend</Link>
                         </li>
                     </ul>
                 </nav>
             </div>
-            <div id="detail"></div>
+            <div id="detail">
+                <Outlet />
+            </div>
         </>
     );
 }
