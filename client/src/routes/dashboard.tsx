@@ -1,4 +1,4 @@
-import {Outlet, Link, useLoaderData, Form} from "react-router-dom";
+import {Outlet, Link, useLoaderData, Form, redirect, NavLink} from "react-router-dom";
 import {getContacts, createContact} from "../contacts.ts";
 
 export async function loader(){
@@ -8,7 +8,7 @@ export async function loader(){
 
 export async function action(){
     const contact = await createContact();
-    return {contact};
+    return redirect(`/dashboard/contacts/${contact.id}/edit`);
 }
 
 export default function Dashboard(){
@@ -45,7 +45,16 @@ export default function Dashboard(){
                         <ul>
                             {contacts.map((contact) => (
                                 <li key={contact.id}>
-                                    <Link to={`contacts/${contact.id}`}>
+                                    <NavLink
+                                        to={`contacts/${contact.id}`}
+                                        className={({ isActive, isPending }) =>
+                                            isActive
+                                                ? "active"
+                                                : isPending
+                                                    ? "pending"
+                                                    : ""
+                                        }
+                                    >
                                         {contact.first || contact.last ? (
                                             <>
                                                 {contact.first} {contact.last}
@@ -54,7 +63,7 @@ export default function Dashboard(){
                                             <i>No Name</i>
                                         )}{" "}
                                         {contact.favorite && <span>★</span>}
-                                    </Link>
+                                    </NavLink>
                                 </li>
                             ))}
                         </ul>

@@ -10,7 +10,9 @@ import Dashboard, {
     loader as dashboardLoader,
     action as dashboardAction,
 } from "./routes/dashboard.tsx";
-import Contact from "./routes/contact.tsx";
+import Contact, {loader as contactLoader} from "./routes/contact.tsx";
+import EditContact, {action as editAction} from "./routes/edit.tsx";
+import {action as destroyAction} from "./routes/destroy.tsx"
 
 
 const router = createBrowserRouter([
@@ -36,7 +38,19 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "contacts/:contactId",
-                element: <Contact/>
+                element: <Contact/>,
+                loader: contactLoader
+            },
+            {
+                path: "contacts/:contactId/edit",
+                element: <EditContact/>,
+                loader: contactLoader,
+                action: editAction
+            },
+            {
+                path:"contacts/:contactId/destroy",
+                action: destroyAction,
+                errorElement: <div>Error when deleting!</div>
             }
         ]
     }
