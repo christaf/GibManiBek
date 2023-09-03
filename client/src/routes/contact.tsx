@@ -1,6 +1,6 @@
 import { Form } from "react-router-dom";
 
-export default function Debt() {
+export default function Contact() {
     const contact = {
         first: "Your",
         last: "Name",

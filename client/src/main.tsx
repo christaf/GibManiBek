@@ -6,8 +6,11 @@ import Root from "./routes/root.tsx";
 import ErrorPage from "./routes/error-page.tsx";
 import SignIn from "./routes/signin.tsx";
 import SignUp from "./routes/signup.tsx";
-import Dashboard from "./routes/dashboard.tsx";
-import Debt from "./routes/debt.tsx";
+import Dashboard, {
+    loader as dashboardLoader,
+    action as dashboardAction,
+} from "./routes/dashboard.tsx";
+import Contact from "./routes/contact.tsx";
 
 
 const router = createBrowserRouter([
@@ -28,10 +31,12 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: <Dashboard/>,
         errorElement: <ErrorPage/>,
+        loader: dashboardLoader,
+        action: dashboardAction,
         children: [
             {
-                path: "debt/:debtId",
-                element: <Debt/>
+                path: "contacts/:contactId",
+                element: <Contact/>
             }
         ]
     }
