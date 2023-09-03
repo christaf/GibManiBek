@@ -7,6 +7,9 @@ import {configurePassport} from "../Passport/configurePassport";
 import cors from "cors";
 import flash from "connect-flash";
 
+//
+import googleAuth from "../Routes/Auth/googleAuth";
+
 const app = express();
 const port = config.get("APP.PORT");
 
@@ -26,6 +29,9 @@ async function ServerStart() {
     app.use(passport.session());
 
     configureRoutes(app);
+    //
+    googleAuth(app);
+
     configurePassport();
 
     app.listen(port, () => {

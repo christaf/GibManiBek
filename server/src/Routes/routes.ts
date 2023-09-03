@@ -30,7 +30,7 @@ export default function (app: any) {
  */
 
 
-export default function (app: any){
+export default function (app: any) {
     //const bodyParser = require('body-parser');
     //app.use(bodyParser.json());
 
@@ -47,12 +47,13 @@ export default function (app: any){
 
 // Endpoint to handle login requests
     app.post('/login', (req, res) => {
+        console.log(req.body.user);
 
         //const { email, password } = req.body.user[0];
-        const { email, password } = req.body;
+        const {email, password} = req.body;
 
         if (!email || !password) {
-            return res.status(400).json({ error: 'Email and password are required' });
+            return res.status(400).json({error: 'Email and password are required'});
         }
 
         const user = users.find(u => u.email === email && u.password === password);
@@ -60,10 +61,10 @@ export default function (app: any){
         console.error(email, password);
 
         if (!user) {
-            return res.status(401).json({ error: 'Invalid credentials' });
+            return res.status(401).json({error: 'Invalid credentials'});
         }
 
-        return res.status(200).json({ message: 'Login successful', user: { id: user.id, email: user.email } });
+        return res.status(200).json({message: 'Login successful', user: {id: user.id, email: user.email}});
 
         /*
         const { email, password } = req.body.user[0];
@@ -72,6 +73,8 @@ export default function (app: any){
         console.error(user?.email);
         console.log(user?.email);
 
-         */
+ */
+
+
     });
 }

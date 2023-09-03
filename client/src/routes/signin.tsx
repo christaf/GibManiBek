@@ -18,8 +18,8 @@ import {useNavigate} from "react-router-dom";
 function Copyright(props: any) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            <div>Mateo&Mateo Kibord Kąąpany</div>
-            <div>Wszystkie Lewa zastrzeżone</div>
+            Mateo&Mateo Kibord Kąąpany
+            Wszystkie Lewa zastrzeżone
             {new Date().getFullYear()}
             {'.'}
         </Typography>
@@ -216,6 +216,7 @@ export default function SignIn() {
                             type={'dark'}
                             label='Log In with Google'
                             onClick={() => {
+                                navigate("/login/federated/google"),
                                 console.log("Google Btn pressed")
                             }}
                         />
