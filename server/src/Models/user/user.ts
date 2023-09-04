@@ -60,8 +60,10 @@ export default class User implements UserProps {
         }
     }
 
-    private hashPassword(password: string, salt: string): string {
-        return bcrypt.hashSync(password, salt);
+    public hashPassword(password: string, salt: string): string {
+        const hashedPassword = bcrypt.hashSync(password, salt);
+        console.log(hashedPassword)
+        return hashedPassword;
     }
 
 }
