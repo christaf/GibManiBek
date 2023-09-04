@@ -10,10 +10,11 @@ import Dashboard, {
     loader as dashboardLoader,
     action as dashboardAction,
 } from "./routes/dashboard.tsx";
+import PayPal from "./routes/PayPal.tsx";
 import Contact, {loader as contactLoader} from "./routes/contact.tsx";
 import EditContact, {action as editAction} from "./routes/edit.tsx";
 import {action as destroyAction} from "./routes/destroy.tsx"
-
+import {PayPalScriptProvider} from "@paypal/react-paypal-js";
 
 const router = createBrowserRouter([
     {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
                 path:"contacts/:contactId/destroy",
                 action: destroyAction,
                 errorElement: <div>Error when deleting!</div>
+            },
+            {
+                path:"contacts/:contactId/PayPal",
+                element: <PayPal/>
             }
         ]
     }

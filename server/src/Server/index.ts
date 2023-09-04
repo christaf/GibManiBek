@@ -6,6 +6,7 @@ import session from "express-session";
 import {configurePassport} from "../Passport/configurePassport";
 import cors from "cors";
 import flash from "connect-flash";
+import PayPal from "../Routes/PayPal"
 
 const app = express();
 const port = config.get("APP.PORT");
@@ -26,6 +27,7 @@ async function ServerStart() {
     app.use(passport.session());
 
     configureRoutes(app);
+    PayPal();
     configurePassport();
 
     app.listen(port, () => {

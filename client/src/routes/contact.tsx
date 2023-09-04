@@ -1,4 +1,4 @@
-import { Form, useLoaderData } from "react-router-dom";
+import {Form, Navigate, useLoaderData} from "react-router-dom";
 import { getContact } from "../contacts.ts";
 
 export async function loader({ params }) {
@@ -52,14 +52,8 @@ export default function Contact() {
                     >
                         <button type="submit">Delete</button>
                     </Form>
-                    <Form
-                        method="post"
-                        action="pay"
-                        onSubmit={() => {
-                            console.log("Navigateto paypal", contact.debt);
-                        }}
-                    >
-                        <button type="submit">Pay With PayPal</button>
+                    <Form action="PayPal">
+                        <button type="submit">Pay with PayPal</button>
                     </Form>
                 </div>
             </div>
