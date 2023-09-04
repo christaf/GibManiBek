@@ -32,7 +32,7 @@ async function ServerStart() {
     //
     googleAuth(app);
 
-    configurePassport();
+    configurePassport(app);
 
     app.listen(port, () => {
         return console.log(`Serwer uruchomiony na porcie ${port}`);
