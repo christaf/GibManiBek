@@ -5,7 +5,7 @@ import Connection from "../Database";
 import {app} from "../Server";
 import session from "express-session";
 
-export function configurePassport() {
+export function configurePassport(app: any) {
     const Connect = Connection.getInstance()
     app.use(session({
         secret: 'your-secret-key', // Replace with a strong secret key
@@ -28,11 +28,11 @@ export function configurePassport() {
         }
     }));
 
-    passport.serializeUser((user: User, done) => {
+    passport.serializeUser((user: any, done: any) => {
         done(null, user.id);
     });
 
-    passport.deserializeUser(async (id, done) => {
+    passport.deserializeUser(async (id: number, done) => {
         try {
             const connection = new Connection();
             const user = await connection.findUserByEmail(id.toString());

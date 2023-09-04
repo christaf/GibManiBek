@@ -14,12 +14,12 @@ async function ServerStart() {
     app.use(express.json());
     app.use(express.urlencoded({extended: true}));
 
-    app.use(session({ secret: 'your-secret-key' }));
+    // app.use(session({ secret: 'your-secret-key' }));
     app.use(passport.initialize());
     app.use(passport.session());
 
     configureRoutes(app);
-    configurePassport();
+    configurePassport(app);
 
     app.listen(port, () => {
         return console.log(`Serwer uruchomiony na porcie ${port}`);
