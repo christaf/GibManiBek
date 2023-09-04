@@ -8,17 +8,6 @@ export async function loader({ params }) {
 
 export default function Contact() {
     const { contact } = useLoaderData();
-    /*
-    const contact = {
-        first: "Your",
-        last: "Name",
-        avatar: "https://placekitten.com/g/200/200",
-        twitter: "your_handle",
-        notes: "Some notes",
-        favorite: true,
-    };
-
-     */
 
     return (
         <div id="contact">
@@ -38,19 +27,9 @@ export default function Contact() {
                     ) : (
                         <i>No Name</i>
                     )}{" "}
-                    <Favorite contact={contact} />
                 </h1>
 
-                {contact.twitter && (
-                    <p>
-                        <a
-                            target="_blank"
-                            href={`https://twitter.com/${contact.twitter}`}
-                        >
-                            {contact.twitter}
-                        </a>
-                    </p>
-                )}
+                {contact.debt && <p>{contact.debt}</p>}
 
                 {contact.notes && <p>{contact.notes}</p>}
 
@@ -73,28 +52,17 @@ export default function Contact() {
                     >
                         <button type="submit">Delete</button>
                     </Form>
+                    <Form
+                        method="post"
+                        action="pay"
+                        onSubmit={() => {
+                            console.log("Navigateto paypal", contact.debt);
+                        }}
+                    >
+                        <button type="submit">Pay With PayPal</button>
+                    </Form>
                 </div>
             </div>
         </div>
-    );
-}
-
-function Favorite({ contact }) {
-    // yes, this is a `let` for later
-    let favorite = contact.favorite;
-    return (
-        <Form method="post">
-            <button
-                name="favorite"
-                value={favorite ? "false" : "true"}
-                aria-label={
-                    favorite
-                        ? "Remove from favorites"
-                        : "Add to favorites"
-                }
-            >
-                {favorite ? "★" : "☆"}
-            </button>
-        </Form>
     );
 }
