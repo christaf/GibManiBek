@@ -1,6 +1,9 @@
 {
   "APP": {
-    "PORT": "8800"
+    "PORT": "8800",
+    "SESSION": {
+      "SECRET": "money"
+    }
   },
   "DATABASE": {
     "HOST": "localhost",
