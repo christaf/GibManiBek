@@ -6,6 +6,7 @@ import selectionHandler from "./select/selectionHandler";
 import deleteHandler from "./delete/deleteHandler";
 import updateHandler from "./update/updateHandler";
 import User from "../Models/user/user";
+import ContactUser from "../Models/user/contactUser";
 
 interface insertData {
     "table": string
@@ -30,15 +31,18 @@ interface deleteData {
     "table": string
     "conditions": Array<[string, string]>
 }
+
 export default class Connection {
 
     private static instance: Connection | null = null;
+
     public static getInstance(): Connection {
         if (!Connection.instance) {
             Connection.instance = new Connection();
         }
         return Connection.instance;
     }
+
     public pool: mysql2.Pool
     public promisePool: Pool
 
@@ -105,4 +109,36 @@ export default class Connection {
     }
 
     //Todo: FINDUSERBY(EMAIL|ID|NAME|LASTNAME)
+    async findContactsById(id: string) {
+        const contactsData = await this.selectDataFromDB({
+            table: "contacts",
+            columns: [],
+            conditions: [["user_id", id]],
+            all: true,
+            like: false
+        });
+
+        return contactsData.result;
+    }
+
+    async findContactUserById(id: string) {
+        const contactUserData = await this.selectDataFromDB({
+            table: "users",
+            columns: ["id", "name", "lastname", "email"],
+            conditions: [["id", id]],
+            all: false,
+            like: false
+        });
+        if (!contactUserData.result || !contactUserData.result[0]) return null;
+        return new ContactUser(contactUserData.result[0]);
+        // const result = []
+        // if (contactUserData.result.length > 1) {
+        //     for(let i = 1; i < contactUserData.result.length; i++) {
+        //         const user = new ContactUser(contactUserData.result[i]);
+        //         console.log("user" + user);
+        //         result.push(user);
+        //     }
+        // }
+        // return result;
+    }
 };

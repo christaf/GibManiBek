@@ -1,5 +1,6 @@
 import passport from "passport";
 import Connection from "../Database";
+import {getContacts} from "./contacts";
 
 export default function (app: any) {
     app.post('/login', passport.authenticate('local', {
@@ -13,9 +14,8 @@ export default function (app: any) {
     app.get('/contacts/:userId', async (req: any, res: any) => {
         try {
             const userId = req.params.userId;
-            const connection = new Connection();
-            const user = await connection.findUserByEmail(userId);
-            res.send(user);
+            const contacts = await getContacts(userId)
+            res.json({userId, contacts});
         } catch (error) {
             console.log(error);
         }

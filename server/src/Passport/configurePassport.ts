@@ -1,6 +1,5 @@
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
-import User from "../Models/user/user";
 import Connection from "../Database";
 
 export function configurePassport(app: any) {
