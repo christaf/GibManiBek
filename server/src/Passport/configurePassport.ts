@@ -8,6 +8,7 @@ export function configurePassport(app: any) {
     passport.use(new LocalStrategy.Strategy({ usernameField: 'email', passwordField: 'password' }, async (email, password, done) => {
         try {
             const user = await Connect.findUserByEmail(email);
+            console.log(user)
             if (!user) {
                 return done(null, false);
             }
